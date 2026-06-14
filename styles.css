@@ -1283,7 +1283,8 @@ footer p {
     section { padding: 3rem 0; }
     
     .top-bar-container { flex-direction: column; gap: 0.5rem; text-align: center; }
-    .nav-logo-img { height: auto; width: 100%; max-width: 180px; max-height: 90px; object-fit: contain; }
+    .logo { justify-content: flex-start; flex: 0 0 auto; }
+    .nav-logo-img { height: auto; width: 180px; max-width: 50vw; object-fit: contain; object-position: left center; }
     header { padding: 1.5rem 0 0 0; }
     header.scrolled { padding: 1.5rem 0 0 0; }
     
