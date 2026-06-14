@@ -1285,8 +1285,8 @@ footer p {
     .top-bar-container { flex-direction: column; gap: 0.5rem; text-align: center; }
     .logo { justify-content: flex-start; flex: 0 0 auto; }
     .nav-logo-img { height: auto; width: 180px; max-width: 50vw; object-fit: contain; object-position: left center; }
-    header { padding: 1.5rem 0 0 0; }
-    header.scrolled { padding: 1.5rem 0 0 0; }
+    header { padding: 0.5rem 0 0 0; }
+    header.scrolled { padding: 0.5rem 0 0 0; }
     
     .split-layout { grid-template-columns: 1fr; }
     .about-image-wrapper { order: -1; } /* Image above text on mobile */
