@@ -414,11 +414,15 @@ header.scrolled {
 }
 
 .mobile-dropdown-content {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     padding-top: 0.5rem;
+}
+
+.mobile-dropdown.active .mobile-dropdown-content {
+    display: flex;
 }
 
 .mobile-dropdown-content a {
@@ -458,6 +462,16 @@ header.scrolled {
 .hamburger::before { top: -8px; }
 .hamburger::after { top: 8px; }
 
+.mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 100;
+}
+
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -468,8 +482,11 @@ header.scrolled {
     z-index: 99;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-top: 180px;
+    padding-bottom: 2rem;
     align-items: center;
+    overflow-y: auto;
     gap: 2rem;
     transform: translateY(-100%);
     transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
@@ -488,7 +505,7 @@ header.scrolled {
 
 .mobile-link {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     text-transform: uppercase;
 }

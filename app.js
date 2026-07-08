@@ -38,12 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            if (link.tagName.toLowerCase() === 'span') return; // Don't close if it's the dropdown toggle
             if (mobileMenu.classList.contains('active')) {
                 toggleMenu();
             }
         });
     });
+
+    const mobileDropdownToggle = document.querySelector('.mobile-dropdown > span');
+    if (mobileDropdownToggle) {
+        mobileDropdownToggle.addEventListener('click', () => {
+            mobileDropdownToggle.parentElement.classList.toggle('active');
+        });
+    }
 
     // --- Intersection Observer for Scroll Animations ---
     const observerOptions = {
