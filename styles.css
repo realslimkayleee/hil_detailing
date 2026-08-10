@@ -1090,14 +1090,15 @@ header.scrolled {
     margin-bottom: 2rem;
 }
 
-.reviewer {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    color: var(--color-blue);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.25rem;
-}
+/* Do not add a .reviewer rule here. The class is not ours any more.
+   SociableKit's Google Reviews widget puts a bare `reviewer` class on every
+   review header it renders, alongside its own sk- prefixed ones, so anything
+   matching .reviewer lands on the live widget. Checked on the live page: every
+   element carrying this class is inside the widget, none is ours. The rule
+   that used to live here styled the hand-written testimonial block that the
+   widget replaced, and its text-transform: uppercase and letter-spacing were
+   leaking into reviewer names and dates. Style .sk-reviewer-info__name if you
+   need to reach a reviewer name. */
 
 .review-meta {
     font-size: 0.85rem;
@@ -1406,4 +1407,60 @@ footer p {
     .method-link { font-size: 1.5rem; }
     .btn { padding: 0.75rem 1.5rem; width: 100%; text-align: center; box-sizing: border-box; }
     .top-reviews { font-size: 0.75rem; }
+}
+
+/* ==========================================================================
+   THIRD-PARTY WIDGET GUARDS  (keep at end of file, outside any @layer)
+   ==========================================================================
+   Since 2026-08-09 SociableKit's new Google Reviews build renders each
+   review's header as a semantic <header> element. The previous build used no
+   <header> at all. The site rule at `header { position: fixed; top: 0;
+   left: 0; width: 100%; z-index: 100 }` above styles the navigation bar by tag
+   name, so it lands on every review header too, pinning it to the viewport and
+   dropping the review body underneath it.
+
+   Measured on the live site before this fix:
+       .sk-review-header   position: fixed   top -5   height 46
+       .sk-review-content  position: static  top 27          <- overlapping
+   and after:
+       .sk-review-header   position: static  top 27   height 46
+       .sk-review-content  position: static  top 93
+
+   These rules must stay outside any @layer. Later layers beat earlier ones
+   regardless of specificity, so a guard in an early layer loses to the site's
+   own rules. This file has no layers today, and it should stay that way here.
+   SociableKit's own stylesheet is unlayered and more specific, so the widget
+   still styles itself and only the host page's bleed-through is neutralised. */
+
+[class*="sk-ww-"] header,
+[class*="sk-ww-"] section,
+[class*="sk-ww-"] article,
+[class*="sk-ww-"] footer {
+  position: static;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: auto;
+  z-index: auto;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  scroll-margin-top: 0;
+}
+
+/* `section::before` and `section::after` above draw a 150px gradient wash and a
+   1px rule at the bottom of every section. Without this they render inside each
+   review card. */
+[class*="sk-ww-"] :is(header, section, article, footer)::before,
+[class*="sk-ww-"] :is(header, section, article, footer)::after {
+  content: none;
+}
+
+/* The widget sets font-family, font-size and colour on its root but never
+   line-height or text-align, so both fall through from the page. */
+[class*="sk-ww-"] {
+  line-height: normal;
+  text-align: start;
 }
